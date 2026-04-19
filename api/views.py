@@ -3,14 +3,15 @@ from .models import Student
 from .serializers import StudentSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,RetrieveModelMixin,DestroyModelMixin,UpdateModelMixin
-from django_filters.rest_framework import DjangoFilterBackend
-from .filters import CityFilter
+from rest_framework.filters import SearchFilter
 
 class LCStudentAPI(GenericAPIView,ListModelMixin,CreateModelMixin):
     queryset= Student.objects.all()
     serializer_class = StudentSerializer
-    filter_backends=[DjangoFilterBackend]
-    filterset_class = CityFilter
+    filter_backends =[SearchFilter]
+    # search_fields =['city'] icontains 
+    # search_fields =['^city'] # Start letter must match
+    search_fields =['=city'] # Exactly match
     def get(self,request,*args, **kwargs):
         return self.list(request, *args,**kwargs)
     def post(self,request,*args,**kwargs):
