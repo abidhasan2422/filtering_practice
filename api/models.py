@@ -5,4 +5,3 @@ class Student(models.Model):
     roll = models.IntegerField(unique=True)
     city = models.CharField(max_length=50)
     
-
